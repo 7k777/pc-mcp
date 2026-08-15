@@ -79,10 +79,13 @@ def screenshot() -> str:
 
 if __name__ == "__main__":
     import uvicorn
-    app = mcp.streamable_http_app(
-        transport_security=TransportSecuritySettings(
-            enable_dns_rebinding_protection=False
+    if TransportSecuritySettings is not None:
+        app = mcp.streamable_http_app(
+            transport_security=TransportSecuritySettings(
+                enable_dns_rebinding_protection=False
+            )
         )
-    )
+    else:
+        app = mcp.streamable_http_app()
     print("pc-mcp 跑起来了，监听 0.0.0.0:8787")
     uvicorn.run(app, host="0.0.0.0", port=8787)
