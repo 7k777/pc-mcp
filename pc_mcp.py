@@ -100,11 +100,20 @@ class Handler(BaseHTTPRequestHandler):
             length = int(self.headers.get("Content-Length", 0))
             body = json.loads(self.rfile.read(length) or b"{}")
         except Exception:
-            self._send({"jsonrpc": "2.0", "id": None, "result": {}})
+            self.send_response(202)
+            self.send_header("Content-Length", "0")
+            self.end_headers()
             return
 
         method = body.get("method", "")
         req_id = body.get("id")
+
+        # JSON-RPC通知（没有id，如 notifications/initialized）：规范要求不回应
+        if req_id is None:
+            self.send_response(202)
+            self.send_header("Content-Length", "0")
+            self.end_headers()
+            return
 
         if method == "initialize":
             result = {
