@@ -8,7 +8,14 @@ import os
 from datetime import datetime
 
 from fastmcp import FastMCP
-from fastmcp.server.transport import TransportSecuritySettings
+
+try:
+    from fastmcp.server.transport import TransportSecuritySettings
+except ImportError:
+    try:
+        from fastmcp.server import TransportSecuritySettings
+    except ImportError:
+        TransportSecuritySettings = None
 
 mcp = FastMCP("pc-mcp")
 
