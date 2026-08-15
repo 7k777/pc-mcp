@@ -142,4 +142,4 @@ class Handler(BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     print("pc-mcp 跑起来了，监听 0.0.0.0:8787")
-    HTTPServer(("0.0.0.0", 8787), Handler).serve_forever()
+    ThreadingHTTPServer(("0.0.0.0", 8787), Handler).serve_forever()
