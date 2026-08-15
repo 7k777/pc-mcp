@@ -6,7 +6,7 @@
 import json
 import os
 import subprocess
-from http.server import HTTPServer, BaseHTTPRequestHandler
+from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 
 TOOLS = [
     {
